@@ -1,6 +1,6 @@
 const WIDTH = 100;
 const HEIGHT = 100;
-const ARROWTOP = 38;
+const ARROWUP = 38;
 const ARROWRIGHT = 39;
 const ARROWDOWN = 40;
 const ARROWLEFT = 37;
@@ -54,7 +54,7 @@ class Block2d extends Block{
 	 includes(block){
 		if ( ( ( this.getX() + this.getWidth() ) >=  ( block.getX() + block.getWidth() ) &&
 		   	( this.getX() ) <= ( block.getX() ) ) &&
-		   	 ( ( this.getY() + this.getHeight() ) <= ( blcok.getY() + block.getHeight()  &&
+		   	 ( ( this.getY() + this.getHeight() ) <= ( block.getY() + block.getHeight()  &&
 		     ( this.getY() ) <= ( block.getY() ) ) ) ) {
 				return true;
 		} else {
@@ -66,7 +66,7 @@ class Block2d extends Block{
 
 class PlayerBlock extends Block2d{
 	constructor(x, y, width, height){
-		super(w, y, width, height);
+		super(x, y, width, height);
 	}
 	
 	 move(direction){
@@ -111,8 +111,24 @@ function draw(ctx, block) {
 function blockHandler(e){
 	if( e.keyCode >= 37 && e.keyCode <= 40){
 		console.log(e.keyCode);	
-		switch ( e.keyCode )
-			case 
+		switch ( e.keyCode ) {
+			case ARROWUP : 
+				console.log ( playerBlock.canMove ( playerBlock.getX(), playerBlock.getY() - HEIGHT) );
+				console.log('UP');
+				break;
+			case ARROWRIGHT :
+				console.log ( playerBlock.canMove ( playerBlock.getX() + WIDTH, playerBlock.getY() ) );
+				console.log('RIGHT');
+				break;
+			case ARROWDOWN :
+				console.log ( playerBlock.canMove ( playerBlock.getX(), playerBlock.getY() + HEIGHT) );
+				console.log('DOWN');
+				break;
+			case ARROWLEFT :
+				console.log ( playerBlock.canMove ( playerBlock.getX() - WIDTH, playerBlock.getY() ) );
+				console.log('LEFT');
+				break;
+		}
 	}
 }
 
@@ -128,6 +144,7 @@ init(points, ctx);
 ctx.strokeRect(0, 0, canvas.width-100, canvas.height-100);
 ctx.fillStyle = 'green';
 draw(ctx, new Block2d(exit[0],exit[1],WIDTH,HEIGHT));
-
+ctx.fillStyle = 'yellow';
+draw(ctx, playerBlock);
 
 document.addEventListener('keydown', blockHandler);
